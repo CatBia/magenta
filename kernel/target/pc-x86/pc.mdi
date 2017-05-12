@@ -1,3 +1,10 @@
 include "system/ulib/ddk/include/mdi/ddk-defs.mdi"
 
-platform-bus = {}
+platform-bus = {
+    device = {
+        name = "i8042"
+        vid = 12
+        pid = 23
+        did = 34
+    }
+}
