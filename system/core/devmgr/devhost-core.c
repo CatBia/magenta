@@ -142,7 +142,7 @@ void dev_ref_release(mx_device_t* dev) {
 
 mx_status_t devhost_device_create(const char* name, void* ctx, mx_protocol_device_t* ops,
                                   mx_driver_t* driver, mx_device_t** out) {
-    mx_device_t* dev = malloc(sizeof(mx_device_t));
+    mx_device_t* dev = calloc(1, sizeof(mx_device_t));
     if (dev == NULL) {
         return ERR_NO_MEMORY;
     }

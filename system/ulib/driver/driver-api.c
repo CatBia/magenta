@@ -26,7 +26,7 @@ __EXPORT mx_status_t device_add(mx_device_t* parent, device_add_args_t* args, mx
 
 __EXPORT mx_status_t device_op_get_protocol(mx_device_t* dev, uint32_t proto_id,
                                                  void** protocol) {
-    if (dev->ops->get_protocol) {
+    if (dev->ops && dev->ops->get_protocol) {
         return dev->ops->get_protocol(dev->ctx, proto_id, protocol);
     }
 
@@ -56,4 +56,9 @@ __EXPORT mx_handle_t get_root_resource(void) {
 __EXPORT mx_status_t load_firmware(mx_driver_t* drv, const char* path,
                                    mx_handle_t* fw, size_t* size) {
     return API->load_firmware(drv, path, fw, size);
+}
+
+// private - only for use by platform-bus driver
+__EXPORT mx_handle_t driver_get_mdi_handle(void) {
+    return API->get_mdi_handle();
 }

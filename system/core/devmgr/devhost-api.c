@@ -146,6 +146,15 @@ static mx_status_t _load_firmware(mx_driver_t* drv, const char* path, mx_handle_
     return r;
 }
 
+static mx_handle_t _get_mdi_handle(void) {
+    // MDI should only be visible to the platform-bus driver so we only allow
+    // calling this once to prevent other drivers in the platform-bus devhost
+    // from reading it.
+    mx_handle_t handle = mdi_handle;
+    mdi_handle = MX_HANDLE_INVALID;
+    return handle;
+}
+
 driver_api_t devhost_api = {
     .driver_unbind = _driver_unbind,
     .device_add = _device_add,
@@ -153,4 +162,5 @@ driver_api_t devhost_api = {
     .device_rebind = _device_rebind,
     .get_root_resource = _get_root_resource,
     .load_firmware = _load_firmware,
+    .get_mdi_handle = _get_mdi_handle,
 };
